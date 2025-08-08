@@ -6,7 +6,12 @@
 #include <thread>
 
 #include <boost/asio.hpp>
+
+#if defined(__FreeBSD__)
+#include <boost/process/v1/async_pipe.hpp>
+#else 
 #include <boost/process/async_pipe.hpp>
+#endif
 
 #include "common/logging/log.h"
 #include "common/polyfill_thread.h"
@@ -326,7 +331,11 @@ private:
 
     struct ConnectionState {
         boost::asio::ip::tcp::socket client_socket;
+#if defined(__FreeBSD__)
+        boost::process::v1::async_pipe signal_pipe;
+#else
         boost::process::async_pipe signal_pipe;
+#endif
 
         SignalInfo info;
         Kernel::KScopedAutoObject<Kernel::KThread> active_thread;
