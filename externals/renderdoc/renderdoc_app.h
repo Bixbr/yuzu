@@ -38,9 +38,8 @@
 
 #if defined(WIN32) || defined(__WIN32__) || defined(_WIN32) || defined(_MSC_VER)
 #define RENDERDOC_CC __cdecl
-#elif defined(__linux__)
-#define RENDERDOC_CC
-#elif defined(__APPLE__)
+//#elif defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
+#elif defined(__unix__)
 #define RENDERDOC_CC
 #else
 #error "Unknown platform"
