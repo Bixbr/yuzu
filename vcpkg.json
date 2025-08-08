@@ -16,9 +16,9 @@
         "boost-icl",
         "boost-intrusive",
         "boost-mpl",
+        "boost-process",
         "boost-range",
         "boost-spirit",
-        "boost-process",
         "boost-test",
         "boost-timer",
         "boost-variant",
@@ -26,7 +26,7 @@
         "lz4",
         "nlohmann-json",
         "zlib",
-        "zstd"       
+        "zstd"
     ],
     "features": {
         "yuzu-tests": {
@@ -41,6 +41,15 @@
                     "platform": "windows"
                 }
             ]
+        },
+        "android": {
+            "description": "Enable Android dependencies",
+            "dependencies": [
+                {
+                    "name": "oboe",
+                    "platform": "android"
+                }
+            ]
         }
     },
     "overrides": [
@@ -51,11 +60,6 @@
         {
             "name": "fmt",
             "version": "10.1.1"
-        },
-        {
-            "name": "boost-process",
-            "version": "1.81.0"
         }
-      
     ]
 }
