@@ -28,6 +28,11 @@
     <string name="step_complete">Complete!</string>
 
     <!-- Home strings -->
+    <string name="alphabetical">Alphabetical</string>
+    <string name="view_list">List</string>
+    <string name="view_grid">Grid</string>
+    <string name="folder">Folder</string>
+    <string name="add_directory_success">"New game directory added successfully "</string>
     <string name="home_games">Games</string>
     <string name="home_search">Search</string>
     <string name="home_settings">Settings</string>
