@@ -1,0 +1,42 @@
+name: Sync upstream mirror
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-mirror-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out mirror repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch and push upstream refs
+        env:
+          UPSTREAM_URL: https://git.bixed.xyz/Bix/yuzu.git
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git remote get-url upstream >/dev/null 2>&1; then
+            git remote add upstream "$UPSTREAM_URL"
+          fi
+
+          # Fetch all branches and tags from the upstream repo
+          git fetch --prune upstream '+refs/heads/*:refs/remotes/upstream/*' '+refs/tags/*:refs/tags/*'
+
+          # Mirror every upstream branch and tag to GitHub
+          git push --prune --force origin '+refs/remotes/upstream/*:refs/heads/*'
+          git push --prune --force origin '+refs/tags/*:refs/tags/*'
