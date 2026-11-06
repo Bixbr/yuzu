@@ -1,4 +1,4 @@
-name: Sync upstream mirror
+name: Sync upstream android branch
 
 on:
   schedule:
@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch and push upstream refs
+      - name: Fetch and push upstream android branch
         env:
           UPSTREAM_URL: https://git.bixed.xyz/Bix/yuzu.git
         run: |
@@ -34,9 +34,5 @@ jobs:
             git remote add upstream "$UPSTREAM_URL"
           fi
 
-          # Fetch all branches and tags from the upstream repo
-          git fetch --prune upstream '+refs/heads/*:refs/remotes/upstream/*' '+refs/tags/*:refs/tags/*'
-
-          # Mirror every upstream branch and tag to GitHub
-          git push --prune --force origin '+refs/remotes/upstream/*:refs/heads/*'
-          git push --prune --force origin '+refs/tags/*:refs/tags/*'
+          git fetch --no-tags upstream refs/heads/android:refs/remotes/upstream/android
+          git push --force origin refs/remotes/upstream/android:refs/heads/android
